@@ -1,0 +1,6 @@
+common:
+  app-name: Test
+nonprod:
+  num-of-replicas: 1
+prod:
+  num-of-replicas: 2
