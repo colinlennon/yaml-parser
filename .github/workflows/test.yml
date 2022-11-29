@@ -48,10 +48,14 @@ jobs:
               echo "KEYVALUE: $KEYVALUE"
               echo "$KEYVALUE" >> $GITHUB_ENV
             fi
-          done <<< "$PROPS"
-          echo "GITHUB_ENV: $GITHUB_ENV"
+          done <<< "$PROPS"          
+          
+      - name: Test to see if variables are set
+        run: |
           echo "app_name: $app_name"
           echo "num_of_replicas: $num_of_replicas"
+          echo "environment: $environment"
+          
   prod-test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
