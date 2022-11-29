@@ -1,6 +1,6 @@
 common:
-  app-name: Test
+  app_name: Test
 nonprod:
-  num-of-replicas: 1
+  num_of_replicas: 1
 prod:
-  num-of-replicas: 2
+  num_of_replicas: 2

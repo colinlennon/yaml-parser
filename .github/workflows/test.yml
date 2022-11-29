@@ -50,8 +50,8 @@ jobs:
             fi
           done <<< "$PROPS"
           echo "GITHUB_ENV: $GITHUB_ENV"
-          echo "app-name: $app-name"
-          echo "num-of-replicas: $num-of-replicas"
+          echo "app_name: $app_name"
+          echo "num_of_replicas: $num_of_replicas"
   prod-test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
