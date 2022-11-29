@@ -61,6 +61,8 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     environment: prod
+    env:
+      environment: prod
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -74,5 +76,24 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          PROPS=$(yq -o=props --unwrapScalar=false .github/deployment-properties.yaml | sed -e 's/ = /=/g')
+          while read -r line; do
+            if [[ $line == common.* ]] ; then
+              echo "line = $line"
+              echo "This is a common property"
+              KEYVALUE=${line#"common."}
+              echo "KEYVALUE: $KEYVALUE"
+              echo "$KEYVALUE" >> $GITHUB_ENV
+            elif [[ $line == $environment.* ]] ; then
+              echo "line = $line"
+              echo "This is a $environment property"
+              KEYVALUE=${line#"$environment."}
+              echo "KEYVALUE: $KEYVALUE"
+              echo "$KEYVALUE" >> $GITHUB_ENV
+            fi
+          done <<< "$PROPS"          
+          
+      - name: Test to see if variables are set
+        run: |
+          echo "app_name: $app_name"
+          echo "num_of_replicas: $num_of_replicas"
